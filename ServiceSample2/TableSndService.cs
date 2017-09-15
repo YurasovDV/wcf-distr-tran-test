@@ -13,7 +13,7 @@ namespace ServiceSample2
         [OperationBehavior(TransactionScopeRequired = true)]
         public void Insert(int value)
         {
-            using (SqlConnection conn = new SqlConnection(References.References.ConnectionString))
+            using (var conn = new SqlConnection(References.References.ConnectionString))
             {
                 conn.Open();
 

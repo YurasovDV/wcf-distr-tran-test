@@ -66,7 +66,14 @@ namespace WCFDistrTran
 
         private static void EnsureTablesExist()
         {
-            var srv = new Server((string)References.References.ServerName);
+            var srv = new Server(References.References.ServerName);
+
+            var old = srv.Databases[References.References.DatabaseName];
+            if (old != null)
+            {
+                srv.KillDatabase(References.References.DatabaseName);
+            }
+
             Database db = new Database(srv, References.References.DatabaseName);
             db.Create();
 
