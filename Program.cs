@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.SqlServer.Management.Smo;
+//using Microsoft.SqlServer.Management.Common;
 using System.Transactions;
 
 namespace WCFDistrTran
@@ -18,8 +18,8 @@ namespace WCFDistrTran
             try
             {
                 EnsureTablesExist();
-                // Success();
-                FailSecond();
+                 Success();
+                //FailSecond();
                 Console.WriteLine("end");
             }
             catch (Exception ex)
@@ -66,7 +66,11 @@ namespace WCFDistrTran
 
         private static void EnsureTablesExist()
         {
-            using (SqlConnection conn = new SqlConnection("Data Source=ASUS\\sqlexpress;Initial Catalog=DistrTranTest;Integrated Security=True"))
+            var srv = new Server((string)References.References.ServerName);
+            Database db = new Database(srv, References.References.DatabaseName);
+            db.Create();
+
+            using (SqlConnection conn = new SqlConnection(References.References.ConnectionString))
             {
                 conn.Open();
                 using (var command = conn.CreateCommand())

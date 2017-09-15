@@ -13,7 +13,7 @@ namespace ServiceSample
         [OperationBehavior(TransactionScopeRequired = true)]
         public void Insert(int value)
         {
-            using (var conn = new SqlConnection("Data Source=ASUS\\sqlexpress;Initial Catalog=DistrTranTest;Integrated Security=True"))
+            using (var conn = new SqlConnection(References.References.ConnectionString))
             {
                 conn.Open();
 
